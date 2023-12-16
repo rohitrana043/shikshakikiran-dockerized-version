@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% load static i18n %}
+{% block  title %}{% trans "About Page" %}{% endblock %}
+{% block body %}
+	<div class="container" style="margin-top: 90px;">
+		<h3>{% trans "About Us" %}</h3>
+		<br>
+		<p>{% trans "Hey!! I am <b>Tech Titan</b> of Hindu College of Engineering, SNP" %}</p>
+		<p>{% trans "By this website I am trying to produce one stop solutions to all the problems of villlages which are affecting economyy, literacy, etc." %}</p>
+		<ul>
+			<li>{% trans "Rohit Rana (Full Stack Developer)" %}</li>
+		</ul>
+	</div>
+{% endblock %}

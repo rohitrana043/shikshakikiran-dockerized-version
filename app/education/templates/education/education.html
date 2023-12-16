@@ -1,0 +1,165 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+{% get_current_language as language_code %}
+{% block title %}{% trans "Education" %}{% endblock title %}
+{% block head %}
+<link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+<style type="text/css">
+.jumbotron{
+      height: 400px;
+      background: url("{% static 'education/images/background.jpg' %}") no-repeat center center;
+      background-size: cover;
+      color: white;
+      margin-top: 65px;
+    }
+    .statechange{
+    	font-size: 6vw;
+    	color: #4d575f;
+    	font-family: 'Quicksand', sans-serif;
+    	font-weight: 900;
+    }
+    .statechange:hover{
+    	color: #00adbc;
+    }
+    .bs-example{
+    	margin: 20px;
+    }
+    .modal-content iframe{
+        margin: 0 auto;
+        display: block;
+
+    }
+  </style>
+  <script type="text/javascript">
+$(document).ready(function(){
+    /* Get iframe src attribute value i.e. YouTube video url
+    and store it in a variable */
+    var url = $("#introVideo").attr('src');
+    
+    /* Assign empty url value to the iframe src attribute when
+    modal hide, which stop the video playing */
+    $("#myModal").on('hide.bs.modal', function(){
+        $("#introVideo").attr('src', '');
+    });
+    
+    /* Assign the initially stored url back to the iframe src
+    attribute when modal is displayed again */
+    $("#myModal").on('show.bs.modal', function(){
+        $("#introVideo").attr('src', url);
+    });
+});
+</script>
+{% endblock head %}
+{% block body %}
+
+	<!-- Jumbotron -->
+	<div class="conatiner" style="margin-top: 65px;" >
+		<div class="jumbotron text-center">
+			<p style="font-size: 3vw;">{% trans "What will you create?" %}</p> 
+			<a href="#courses" style="padding-left: 3vw; padding-right: 3vw; color: white; font-size: 1.5vw;" class="btn btn-warning">{% trans "Start Learning" %}</a> <br>
+			<a style="color: white; font-size: 1.5vw;" href="#myModal" class="btn" data-toggle="modal">
+				<i class="fa fa-play-circle fa-1x mb-3"></i>
+				{% trans "Watch The Video" %}
+			</a>
+		</div>
+	</div>
+	<div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <iframe width="465" height="550" src="https://www.youtube.com/embed/nKIu9yen5nc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<!-- Block titles -->
+	<div class="container-fluid">
+		<h4 class="text-center" style="color: #00adbc;">{% trans "We're making a difference" %}</h4>
+		<br>
+		<div class="row">
+			<div class="col-sm">
+				<h1 class="statechange text-center">{% trans "833M" %}</h1>
+				<p class="text-center">{% trans "is the total rural population of India." %}</p>
+			</div>
+			<div class="col-sm">
+				<h1 class="statechange text-center">{% trans "635M" %}</h1>
+				<p class="text-center">{% trans "of our students belongs to rural areas." %}</p>
+			</div>
+			<div class="col-sm">
+				<h1 class="statechange text-center">89.4%</h1>
+				<p class="text-center">{% trans "students of rural areas dont know how to operate computers." %}</p>
+			</div>
+		</div>
+	</div>
+	<br>
+
+	<h2 id="courses" style="color: #4d575f; font-weight: 900;" class="text-center">{% trans "Courses" %}</h2>
+	<br>
+
+	<!-- Subjects Cards -->
+	<div class="container">
+		<div class="row">
+			{% for subject in object_list %}
+				<div class="col-sm-4">
+			    	<div class="card text-center">
+			        	<div class="card-img-wrap">
+			        		<img src={{ subject.subject_image.url }} style="height:300px;" class="card-img-top" alt="{{subject.subject_name}}">
+			        	</div>
+				        <div class="card-body">
+				        	{% if language_code == 'hi' %}
+				        	<h5 class="card-title">{{subject.subject_name_hindi}}</h5>
+				        	{% else %}
+				        	<h5 class="card-title">{{subject.subject_name}}</h5>
+				        	{% endif %}
+					        <a href="{% url 'topic-list' subject.subject_name %}" class="btn btn-outline-success">{% trans "Click Here" %}</a>
+			        	</div>
+			      	</div>
+			      	<br>
+			    </div>
+			{% endfor %}
+  		</div>
+	</div>
+	<br>
+	<!-- Carousel/Slider -->
+  <div class="slider">
+	  <div id="carouselCaptions" class="carousel slide" data-keyboard='true' data-ride="carousel">
+	    <ol class="carousel-indicators">
+	      <li data-target="#carouselCaptions" data-slide-to="0" class="active"></li>
+	      <li data-target="#carouselCaptions" data-slide-to="1"></li>
+	      <li data-target="#carouselCaptions" data-slide-to="2"></li>
+	      <li data-target="#carouselCaptions" data-slide-to="3"></li>
+	      <li data-target="#carouselCaptions" data-slide-to="4"></li>
+	    </ol>
+	    <div class="carousel-inner">
+	      <div class="carousel-item active">
+	        <img src={% static 'education/images/science.png' %} class="d-block w-100" alt="">
+	      </div>
+	      <div class="carousel-item">
+	        <img src={% static 'education/images/computing.jpg' %} class="d-block w-100" alt="Computing">
+	      </div>
+	      <div class="carousel-item">
+	        <img src={% static 'education/images/Economics&finance.png' %} class="d-block w-100" alt="Economics&Finance">
+	      </div>
+	      <div class="carousel-item">
+	        <img src={% static 'education/images/math.jpg' %} class="d-block w-100" alt="Math">
+	      </div>
+	      <div class="carousel-item">
+	        <img src={% static 'education/images/Arts&Humanities1.jpg' %} class="d-block w-100" alt="Arts&Humanities">
+	      </div>
+	    </div>
+	    <a class="carousel-control-prev" href="#carouselCaptions" role="button" data-slide="prev">
+	      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+	      <span class="sr-only">Previous</span>
+	    </a>
+	    <a class="carousel-control-next" href="#carouselCaptions" role="button" data-slide="next">
+	      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+	      <span class="sr-only">Next</span>
+	    </a>
+	  </div>
+	</div>
+{% endblock body %}

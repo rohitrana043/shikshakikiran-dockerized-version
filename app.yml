@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shikshakikirandeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shikshakikiran
+  template:
+    metadata:
+      labels:
+        app: shikshakikiran
+    spec:
+      containers:
+      - name: shikshakikirancontainer
+        image: shikshakikiran:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shikshakikiranservice
+spec:
+  selector:
+    app: shikshakikiran
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: LoadBalancer

@@ -1,0 +1,59 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans "Education" %}{% endblock title %}
+{% get_current_language as language_code %}
+{% block head %}
+<script type="text/javascript">
+    function changesrc(ifrm,href){
+        document.getElementById(ifrm).setAttribute('src',href)
+    }
+    
+</script>
+{% endblock head %}
+{% block body %}
+	<div class="container-fluid" style="margin-top: 80px;">
+		<div class="row">
+            <div class="col-md-9">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe id="ifrm" class="embed-responsive-item" src="{{ object_list.0.url }}" allowfullscreen>
+                    </iframe>
+
+                    <li><a  onClick="changesrc('iframe_style','http://www.yudu.com/item/embedded_reader/284894/News-Beat?refid=83508');return false"><img src="http://www.yudu.com/item_thumbnail/28/3726/994216f08/thumb/page1.jpg" alt="Education Video" style="border: 0;" /><p>
+                        {% if language_code == 'hi' %}
+                        {{ object_list.0.topic.topic_name_hindi }}
+                        {% else %}
+                        {{ object_list.0.topic.topic_name }}
+                        {% endif %}
+                    </p></a></li>
+
+                </div>
+            </div>
+            <div class="col-md-3 border" style="height: 552.23px; width: 337.25px;">
+                <br>
+                <a href="{% url 'topic-list' object_list.0.topic.subject.subject_name %}" style=" text-transform: uppercase;" class="d-block btn btn-secondary text-center">
+                {% if language_code == 'hi' %}
+                {{ object_list.0.topic.topic_name_hindi }}
+                {% else %}
+                {{ object_list.0.topic.topic_name }}
+                {% endif %}
+                </a>
+                <br>
+                Topics are:
+                <br><br>
+                {% for video in object_list %}
+                    <a style="color: green" href="{{ video.url }}" onclick="changesrc('ifrm', '{{video.url}}'); return false " class="btn d-block">
+                        {% if language_code == 'hi' %}
+                        {{ video.video_title_hindi }}
+                        {% else %}
+                        {{ video.video_title }}
+                        {% endif %}
+                    </a>   
+                {% endfor %}
+            </div>
+		</div>
+	</div>
+
+{% endblock body %}
+<!-- <iframe width="460" height="450" src="{{ video.url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+<!-- 337.25*552.23 -->
